@@ -393,7 +393,7 @@ GameObject:
   - component: {fileID: 1162504983}
   - component: {fileID: 1162504982}
   - component: {fileID: 1162504984}
-  m_Layer: 6
+  m_Layer: 7
   m_Name: Aim
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -645,7 +645,7 @@ GameObject:
   - component: {fileID: 1222634517}
   - component: {fileID: 1222634521}
   - component: {fileID: 1222634522}
-  m_Layer: 8
+  m_Layer: 3
   m_Name: Head
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -793,7 +793,7 @@ GameObject:
   - component: {fileID: 1406408297}
   - component: {fileID: 1406408295}
   - component: {fileID: 1406408301}
-  m_Layer: 8
+  m_Layer: 3
   m_Name: Player
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1062,7 +1062,7 @@ GameObject:
   - component: {fileID: 1887907928}
   - component: {fileID: 1887907927}
   - component: {fileID: 1887907926}
-  m_Layer: 7
+  m_Layer: 6
   m_Name: Scrap
   m_TagString: Scrap
   m_Icon: {fileID: 0}
@@ -1167,7 +1167,7 @@ GameObject:
   - component: {fileID: 1917284520}
   - component: {fileID: 1917284519}
   - component: {fileID: 1917284518}
-  m_Layer: 8
+  m_Layer: 3
   m_Name: Eyes
   m_TagString: Untagged
   m_Icon: {fileID: 0}
