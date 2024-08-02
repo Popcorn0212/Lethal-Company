@@ -9262,6 +9262,12 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 1050353770}
   m_PrefabAsset: {fileID: 0}
+--- !u!4 &1118604586 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 1891815698819791579, guid: d2c2d5c85de21bf419815bd2f084c26e,
+    type: 3}
+  m_PrefabInstance: {fileID: 1847810662}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1122738920
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -12907,6 +12913,16 @@ PrefabInstance:
       propertyPath: m_Name
       value: Slime
       objectReference: {fileID: 0}
+    - target: {fileID: 2077734909376606092, guid: 4ec6ba1086b8d6047a6c2618be133d55,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3006074086750092109, guid: 4ec6ba1086b8d6047a6c2618be133d55,
+        type: 3}
+      propertyPath: m_Speed
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 5125804166969964043, guid: 4ec6ba1086b8d6047a6c2618be133d55,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -12966,7 +12982,7 @@ PrefabInstance:
         type: 3}
       propertyPath: target
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 1118604586}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -13698,12 +13714,12 @@ PrefabInstance:
     - target: {fileID: 1891815698819791579, guid: d2c2d5c85de21bf419815bd2f084c26e,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 3.191
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1891815698819791579, guid: d2c2d5c85de21bf419815bd2f084c26e,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 5.46
+      value: 300
       objectReference: {fileID: 0}
     - target: {fileID: 1891815698819791579, guid: d2c2d5c85de21bf419815bd2f084c26e,
         type: 3}
@@ -16477,10 +16493,35 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1191677498}
     m_Modifications:
+    - target: {fileID: 17657479818447221, guid: 6d8a0e92a4ebe00449ef414e1ebe1fd3,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 506856444240097012, guid: 6d8a0e92a4ebe00449ef414e1ebe1fd3,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4753354223848567422, guid: 6d8a0e92a4ebe00449ef414e1ebe1fd3,
         type: 3}
       propertyPath: m_Name
       value: WoodRack
+      objectReference: {fileID: 0}
+    - target: {fileID: 5411125353628495241, guid: 6d8a0e92a4ebe00449ef414e1ebe1fd3,
+        type: 3}
+      propertyPath: m_NavMeshLayer
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5411125353628495241, guid: 6d8a0e92a4ebe00449ef414e1ebe1fd3,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8039844436260526901, guid: 6d8a0e92a4ebe00449ef414e1ebe1fd3,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8400253486815983911, guid: 6d8a0e92a4ebe00449ef414e1ebe1fd3,
         type: 3}
@@ -19052,6 +19093,7 @@ SceneRoots:
   - {fileID: 1543648546}
   - {fileID: 1477738147}
   - {fileID: 140384757}
+  - {fileID: 325168708}
   - {fileID: 346004674}
   - {fileID: 895928011}
   - {fileID: 1139900386}
@@ -19061,4 +19103,3 @@ SceneRoots:
   - {fileID: 1696202666}
   - {fileID: 577791155}
   - {fileID: 1847810662}
-  - {fileID: 325168708}
