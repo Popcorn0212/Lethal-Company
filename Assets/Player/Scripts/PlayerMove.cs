@@ -1,30 +1,42 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class PlayerMove : MonoBehaviour
 {
+    public float climbSpeed = 3f; // 사다리를 오르는 속도
+    public LayerMask ladderMask; // 사다리 레이어
+    public Transform orientation; // 카메라나 플레이어의 방향을 조정하기 위한 변수
+
+    private bool isClimbing = false; // 현재 클라이밍 상태
+    private CharacterController characterController;
+
     public float moveSpeed = 7.0f;
     public float rotSpeed = 200.0f;
     public float yVelocity = 100.0f;
     public float jumpPower = 20.0f;
+    public float maxStamina = 100;
+    public float currentStamina;
+    public bool staminaOring = false;
+    public bool isSprint = false;
+    public int hp = 3;
     public int maxJumpCount = 2;
     int jumpCount;
 
-    // 회전 값을 미리 계산하기 위한 회전축(x, y) 변수
     float rotX;
     float rotY;
     float yPos;
 
     CharacterController cc;
 
-    // 중력을 적용하고 싶다.
-    // 바닥에 충돌이 있을 때까지 아래로 계속 내려가게 하고 싶다.
-    // 방향 : 아래, 크기 : 중력
     Vector3 gravityPower;
 
     void Start()
     {
+        UnityEngine.Cursor.lockState = CursorLockMode.Locked;
+
         // 최초의 회전 상태로 시작을 하고싶다.
         rotX = transform.eulerAngles.x;
         rotY = transform.eulerAngles.y;
@@ -36,19 +48,23 @@ public class PlayerMove : MonoBehaviour
         gravityPower = Physics.gravity;
 
         jumpCount = maxJumpCount;
+
+        characterController = GetComponent<CharacterController>();
     }
 
     void Update()
     {
-        Move();
+            Move();
+            Rotate();
 
-        Rotate();
+        if (isClimbing)
+        {
+            float verticalInput = Input.GetAxis("Vertical");
+            Vector3 climbDirection = orientation.up * verticalInput; // 오르는 방향
+            characterController.Move(climbDirection * climbSpeed * Time.deltaTime);
+        }
     }
 
-    // "Horizontal"과 "Vertical" 입력을 이용해서 수평면으로 이동하게 하고 싶다.
-    // 1. 사용자의 입력을 받는다.
-    // 2. 방향, 속력을 계산한다.
-    // 3. 매 프레임마다 계산된 속도로 자신의 위치를 변경한다.
     void Move()
     {
         // 1. 수평 이동 계산
@@ -94,12 +110,50 @@ public class PlayerMove : MonoBehaviour
         //transform.position += dir * moveSpeed * Time.deltaTime;
         cc.Move(dir * moveSpeed * Time.deltaTime);
         //cc.SimpleMove(dir * moveSpeed * Time.deltaTime);
+
+        // 키보드의 왼쪽 쉬프트를 누르고 있으면 플레이어의 이동속도를 높히고 싶다.
+        if (Input.GetKey(KeyCode.LeftShift) && currentStamina > 0)
+        {
+            isSprint = true;
+        }
+        else
+        {
+            isSprint = false;
+        }
+
+        if (isSprint == true)
+        {
+            moveSpeed = 10;
+
+            if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.D))
+            {
+                currentStamina -= 0.1f;
+            }
+        }
+        else
+        {
+            moveSpeed = 5; 
+            if (currentStamina < maxStamina)
+            {
+                currentStamina += 0.3f;
+            }
+        }
+
+
+        if (currentStamina <= 0 && !staminaOring)
+        {
+            currentStamina -= 300;  // 스태미나에 -n을 더함
+            staminaOring = true;  // 수정했음을 기록
+        }
+
+        // 스태미나가 0보다 크면 staminaOring을 다시 false로 설정
+        if (currentStamina > 0)
+        {
+            staminaOring = false;
+        }
+
     }
 
-    // 사용자의 마우스 드래그 방향에 따라서 나의 상하좌우 회전이 되게 하고 싶다.
-    // 1. 사용자의 마우스 드래그 입력을 받는다.
-    // 2. 회전 속력, 회전 방향
-    // 3. 매 프레임마다 계산된 속도로 자신의 회전값을 변경한다.
     void Rotate()
     {
         float mouseX = Input.GetAxis("Mouse X");
@@ -122,5 +176,34 @@ public class PlayerMove : MonoBehaviour
         // 계산된 회전 값을 나의 transform 회전 값으로 적용한다.
         transform.eulerAngles = new Vector3(0, rotY, 0);
         Camera.main.transform.GetComponent<FollowCamera>().rotX = rotX;
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (IsLadder(other))
+        {
+            isClimbing = true;
+            characterController.slopeLimit = 90f; // 사다리에서 경사 제한 해제
+            characterController.stepOffset = 0f; // 발걸음 높이 제거
+            yVelocity = 0;
+            moveSpeed = 5;
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (IsLadder(other))
+        {
+            isClimbing = false;
+            characterController.slopeLimit = 45f; // 기본 경사 제한으로 복원
+            characterController.stepOffset = 0.3f; // 기본 발걸음 높이로 복원
+            yVelocity = 0.8f;
+            moveSpeed = 5;
+        }
+    }
+
+    private bool IsLadder(Collider collider)
+    {
+        return ladderMask == (ladderMask | (1 << collider.gameObject.layer));
     }
 }
