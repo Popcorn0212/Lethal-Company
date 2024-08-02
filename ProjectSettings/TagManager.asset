@@ -5,6 +5,9 @@ TagManager:
   serializedVersion: 2
   tags:
   - Scrap
+  - Ladder
+  - Hand
+  - Ground
   layers:
   - Default
   - TransparentFX
@@ -14,8 +17,8 @@ TagManager:
   - UI
   - Scrap
   - Aim
-  - 
-  - 
+  - Ladder
+  - Ground
   - 
   - 
   - 
