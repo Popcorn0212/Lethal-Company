@@ -8,6 +8,7 @@ public class TimeSystem : MonoBehaviour
     public Text text_timer;  // 타이머를 출력할 텍스트 지정
     public Text text_dayTime;  // 오전/오후 를 출력할 텍스트 지정
     public List<Image> img_timeIcons = new List<Image>();  // 시간대 별로 표시 아이콘들을 지정
+    public GameObject img_dead;  // 사망 화면 저장
 
     float min;  // 분
     int hour = 8;  // 시
@@ -52,11 +53,17 @@ public class TimeSystem : MonoBehaviour
             img_timeIcons[1].gameObject.SetActive(true);  // 오후 시간 이이콘을 활성화
         }
 
-        // 현재 "시"가 6 을 넘을 경우
-        if(hour == 6)
+        // 현재 "시"가 5 를 넘을 경우
+        if(hour == 5)
         {
             img_timeIcons[1].gameObject.SetActive(false);  // 오후 시간 아이콘 비활성화
             img_timeIcons[2].gameObject.SetActive(true);  // 밤 시간 아이콘 활성화
+        }
+
+        // 현재 "시"가 7 을 넘을 경우
+        if(hour == 7)
+        {
+            img_dead.gameObject.SetActive(true);  // 사망 화면 활성화
         }
     }
 }

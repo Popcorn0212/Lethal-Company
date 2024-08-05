@@ -8,7 +8,7 @@ using UnityEngine.SceneManagement;
 
 public class LoadManager : MonoBehaviour
 {
-    public GameObject img_gameMenu;
+    public GameObject img_gameMenu;  // 게임 메뉴 화면 지정
 
 
     void Start()
@@ -18,6 +18,7 @@ public class LoadManager : MonoBehaviour
 
     void Update()
     {
+        // Esc 키를 누를 시 게임 메뉴 화면 활성화
         if (Input.GetButtonDown("Cancel"))
         {
             Cursor.lockState = CursorLockMode.None;
