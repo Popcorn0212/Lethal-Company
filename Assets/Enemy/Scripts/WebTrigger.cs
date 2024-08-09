@@ -25,6 +25,7 @@ public class WebTrigger : MonoBehaviour
     {
         if(other.gameObject.name == "Player")
         {
+            sa.myState = SpiderAI.EnemyState.Walk;
             sa.target = this.transform;
         }
     }
