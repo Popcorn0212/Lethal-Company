@@ -36,16 +36,16 @@ public class SpiderAI : MonoBehaviour
         switch (myState)
         {
             case EnemyState.Idle:
-
+                Idle();
                 break;
             case EnemyState.Walk:
-
+                Walk();
                 break;
             case EnemyState.Attack:
-
+                Attack();
                 break;
             case EnemyState.AttackDelay:
-
+                AttackDelay();
                 break;
         }
     }
@@ -55,39 +55,62 @@ public class SpiderAI : MonoBehaviour
         if (other.gameObject.name == "Player")
         {
             target = player;
+
             myState = EnemyState.Attack;
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if(other.gameObject.name == "Player")
+        {
+            myState = EnemyState.Walk;
         }
     }
 
     public void Idle()
     {
         enemyAnim.SetTrigger("Idle");
-        agent.isStopped = true;
+
+        currentTime = 0;
     }
 
     public void Walk()
     {
-        agent.isStopped = false;
-
         if (target != null)
         {
             agent.SetDestination(target.position);
         }
         enemyAnim.SetTrigger("Walk");
+
+        currentTime = 0;
     }
 
     public void Attack()
     {
+        currentTime += Time.deltaTime;
+
+        transform.forward = player.forward * -1;
+
         enemyAnim.SetTrigger("Attack");
+
+        if(currentTime > 1.1f)
+        {
+            myState = EnemyState.AttackDelay;
+            currentTime = 0;
+        }
     }
 
     public void AttackDelay()
     {
-        float dist = Vector3.Distance(transform.position, target.position);
+        enemyAnim.SetTrigger("AttackDelay");
 
-        if(dist > 4.0f)
+        currentTime += Time.deltaTime;
+
+        if (currentTime > 2.0f)
         {
-            myState = EnemyState.Walk;
+            myState = EnemyState.Attack;
+            currentTime = 0;
         }
     }
 }

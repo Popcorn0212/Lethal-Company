@@ -6,7 +6,7 @@ using UnityEngine.AI;
 
 public class WebTrigger : MonoBehaviour
 {
-    SpiderAI sa;
+    public SpiderAI sa;
     public GameObject spider;
     public float currentTime;
     bool timer = false;
