@@ -6,6 +6,7 @@ public class CounterZone : MonoBehaviour
 {
     ScrapValue sv;
 
+
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Scrap"))

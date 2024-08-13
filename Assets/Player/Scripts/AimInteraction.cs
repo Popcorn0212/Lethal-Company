@@ -19,6 +19,8 @@ public class AimInteraction : MonoBehaviour
     public GameObject player;
     public GameObject targetScrap;
 
+    public GameObject text_pickUp;
+
     public List<GameObject> inventorySlot;
 
     void Start()
@@ -35,7 +37,7 @@ public class AimInteraction : MonoBehaviour
         Ladder();
     }
 
-    private void OnTriggerStay(Collider other)
+    private void OnTriggerEnter(Collider other)
     {
         isInteraction = true;
         if (other.tag == "Scrap")

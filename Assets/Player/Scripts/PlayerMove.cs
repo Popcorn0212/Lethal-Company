@@ -26,7 +26,7 @@ public class PlayerMove : MonoBehaviour
     int jumpCount;
 
     float rotX;
-    float rotY;
+    public float rotY;
     float yPos;
 
     CharacterController cc;
@@ -38,7 +38,6 @@ public class PlayerMove : MonoBehaviour
         UnityEngine.Cursor.lockState = CursorLockMode.Locked;
 
         // 최초의 회전 상태로 시작을 하고싶다.
-        rotX = transform.eulerAngles.x;
         rotY = transform.eulerAngles.y;
 
         // 캐릭터 컨트롤러 컴포넌트를 변수에 담아놓는다.
@@ -54,8 +53,10 @@ public class PlayerMove : MonoBehaviour
 
     void Update()
     {
-            Move();
-            Rotate();
+        Move();
+        Rotate();
+
+        //transform.forward = head.forward;
 
         if (isClimbing)
         {
@@ -156,26 +157,15 @@ public class PlayerMove : MonoBehaviour
 
     void Rotate()
     {
-        float mouseX = Input.GetAxis("Mouse X");
-        float mouseY = Input.GetAxis("Mouse Y");
+        float mouseX = 0;
+        mouseX = Input.GetAxis("Mouse X");
 
         // 각 축 별로 회전 값을 미리 계산한다.
-        rotX += mouseY * rotSpeed * Time.deltaTime;
         rotY += mouseX * rotSpeed * Time.deltaTime;
-
-        // 상하 회전은 -60도 ~ +60도까지로 제한한다.
-        if (rotX > 60.0f)
-        {
-            rotX = 60.0f;
-        }
-        else if (rotX < -60.0f)
-        {
-            rotX = -60.0f;
-        }
 
         // 계산된 회전 값을 나의 transform 회전 값으로 적용한다.
         transform.eulerAngles = new Vector3(0, rotY, 0);
-        Camera.main.transform.GetComponent<FollowCamera>().rotX = rotX;
+        HeadMove.rotY = rotY;
     }
 
     private void OnTriggerEnter(Collider other)
