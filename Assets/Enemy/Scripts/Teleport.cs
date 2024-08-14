@@ -9,8 +9,6 @@ public class Teleport : MonoBehaviour
     public Transform innerPos;
     public GameObject target;
     public GameObject dirLight;
-    
-    
 
     CharacterController cc;
 
