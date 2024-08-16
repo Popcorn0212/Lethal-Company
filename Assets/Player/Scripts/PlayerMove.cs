@@ -19,9 +19,11 @@ public class PlayerMove : MonoBehaviour
     public float jumpPower = 20.0f;
     public float maxStamina = 100;
     public float currentStamina;
+    public float currentTime;
+    public float hitDelay = 1.5f;
     public bool staminaOring = false;
     public bool isSprint = false;
-    public int hp = 3;
+    public int hp = 4;
     public int maxJumpCount = 2;
     int jumpCount;
 
@@ -64,6 +66,8 @@ public class PlayerMove : MonoBehaviour
             Vector3 climbDirection = orientation.up * verticalInput; // 오르는 방향
             characterController.Move(climbDirection * climbSpeed * Time.deltaTime);
         }
+
+        currentTime += Time.deltaTime;
     }
 
     void Move()
@@ -168,6 +172,19 @@ public class PlayerMove : MonoBehaviour
         HeadMove.rotY = rotY;
     }
 
+    private void OnTriggerStay(Collider other)
+    {
+        if (other.tag == "Slime")
+        {
+            if (currentTime > hitDelay)
+            {
+                hp--;
+                currentTime = 0;
+            }
+
+        }
+    }
+
     private void OnTriggerEnter(Collider other)
     {
         if (IsLadder(other))
@@ -178,6 +195,8 @@ public class PlayerMove : MonoBehaviour
             yVelocity = 0;
             moveSpeed = 5;
         }
+
+
     }
 
     private void OnTriggerExit(Collider other)

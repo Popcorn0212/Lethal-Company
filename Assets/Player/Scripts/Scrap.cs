@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.ShaderGraph;
 using UnityEngine;
 
 public class Scrap : MonoBehaviour
@@ -20,6 +21,8 @@ public class Scrap : MonoBehaviour
 
     void Start()
     {
+        //PlayerHead = transform.Find("Head");
+
         // 부모 오브젝트의 Transform을 참조합니다.
         parent = transform;
 
@@ -40,7 +43,7 @@ public class Scrap : MonoBehaviour
         if (isGrab)
         {
             transform.eulerAngles = new Vector3(objectARotation.x, objectARotation.y, objectARotation.z);
-
+            isScaned = false;
         }
 
         if (isScaned)
@@ -48,7 +51,11 @@ public class Scrap : MonoBehaviour
             currentTime = 0;
             grandchild.gameObject.SetActive(true); 
         }
-        if (currentTime > 10)
+        if (isScaned == false && currentTime > 5)
+        {
+            grandchild.gameObject.SetActive(false);
+        }
+        if (isScaned == false && isGrab) 
         {
             grandchild.gameObject.SetActive(false);
         }
