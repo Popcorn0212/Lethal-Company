@@ -37,13 +37,4 @@ public class Settle : MonoBehaviour
             totalValue -= Scrap.scrapValue;
         }
     }
-
-    private void OnTriggerExit(Collider other)
-    {
-        if (other.tag == "Scrap")
-        {
-            Scrap = other.GetComponent<Scrap>();
-            totalValue -= Scrap.scrapValue;
-        }
-    }
 }
