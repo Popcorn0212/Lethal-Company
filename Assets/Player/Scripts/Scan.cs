@@ -38,8 +38,11 @@ public class Scan : MonoBehaviour
                         }
 
                     }
-                }
             }
+
+        
+    }
+
     private bool IsObstructed(Collider target)
     {
         Ray ray = new Ray(Camera.main.transform.position, target.transform.position - Camera.main.transform.position);
