@@ -145,7 +145,6 @@ public class AimInteraction : MonoBehaviour
 
         if (nowInvenSlot == 1)
         {
-            print(nowInvenSlot);
             if (inventorySlot[1] != null)
             {
                 inventorySlot[1].gameObject.transform.position = hand.transform.position;
@@ -165,7 +164,6 @@ public class AimInteraction : MonoBehaviour
         }
         if (nowInvenSlot == 2)
         {
-            print(nowInvenSlot);
             if (inventorySlot[2] != null)
             {
                 inventorySlot[2].gameObject.transform.position = hand.transform.position;
@@ -185,7 +183,6 @@ public class AimInteraction : MonoBehaviour
         }
         if (nowInvenSlot == 3)
         {
-            print(nowInvenSlot);
             if (inventorySlot[3] != null)
             {
                 inventorySlot[3].gameObject.transform.position = hand.transform.position;
@@ -205,7 +202,6 @@ public class AimInteraction : MonoBehaviour
         }
         if (nowInvenSlot == 4)
         {
-            print(nowInvenSlot);
             if (inventorySlot[4] != null)
             {
                 inventorySlot[4].gameObject.transform.position = hand.transform.position;
