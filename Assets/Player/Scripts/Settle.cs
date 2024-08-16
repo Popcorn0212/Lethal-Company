@@ -11,7 +11,7 @@ public class Settle : MonoBehaviour
 
     void Start()
     {
-        
+
     }
 
 
@@ -26,6 +26,15 @@ public class Settle : MonoBehaviour
         {
             Scrap = other.GetComponent<Scrap>();
             totalValue += Scrap.scrapValue;
+        }
+    }  
+    
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.tag == "Scrap")
+        {
+            Scrap = other.GetComponent<Scrap>();
+            totalValue -= Scrap.scrapValue;
         }
     }
 
