@@ -1109,6 +1109,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: SettleSpace
       objectReference: {fileID: 0}
+    - target: {fileID: 8431245152984218707, guid: 5a4d256ea608a7044b00d5f91a5182c5,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8814439287676833809, guid: 5a4d256ea608a7044b00d5f91a5182c5,
         type: 3}
       propertyPath: m_LocalPosition.x
