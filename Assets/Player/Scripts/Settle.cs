@@ -1,13 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
-using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Settle : MonoBehaviour
 {
     Scrap Scrap;
     public int totalValue;
-    public TMP_Text Value;
+    public Text Value;
 
     void Start()
     {
