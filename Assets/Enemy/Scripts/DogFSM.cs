@@ -28,6 +28,7 @@ public class DogFSM : MonoBehaviour
         myState = EnemyState.Idle;
         enemyAnim = GetComponent<Animator>();
         agent = GetComponent<NavMeshAgent>();
+        currentTime = 0;
     }
 
     void Update()
@@ -53,15 +54,18 @@ public class DogFSM : MonoBehaviour
                 AttackDelay();
                 break;
         }
+
+        if(target != null)
+        {
+            agent.SetDestination(target.position);
+        }
     }
 
     private void OnTriggerEnter(Collider other)
     {
         if(other.gameObject.name == "Walk" || other.gameObject.name == "Run")
         {
-            target = player;
-            transform.forward = player.forward * -1;
-            agent.SetDestination(target.position);
+            myState = EnemyState.Trace;
         }
 
         if(other.gameObject.name == "Player")
@@ -92,18 +96,14 @@ public class DogFSM : MonoBehaviour
     
     public void Trace()
     {
+        target = player;
         enemyAnim.SetBool("isTrace", true);
-
-        if(target = null)
-        {
-            enemyAnim.SetBool("isTrace", false);
-        }
     }
     
     public void Attack()
     {
         currentTime += Time.deltaTime;
-        transform.forward = player.forward * -1;
+        transform.forward = player.position;
         enemyAnim.SetTrigger("Attack");
 
         if(currentTime > 1)
@@ -115,13 +115,19 @@ public class DogFSM : MonoBehaviour
 
     public void ReTrace()
     {
+        target = player;
         enemyAnim.SetTrigger("ReTrace");
-
     }
     
     public void AttackDelay()
     {
+        currentTime += Time.deltaTime;
         enemyAnim.SetTrigger("AttackDelay");
 
+        if(currentTime > 2)
+        {
+            myState = EnemyState.Attack;
+            currentTime = 0;
+        }
     }
 }
