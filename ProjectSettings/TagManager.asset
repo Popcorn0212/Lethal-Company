@@ -12,6 +12,7 @@ TagManager:
   - Run
   - Slime
   - Enemy
+  - Ship
   layers:
   - Default
   - TransparentFX

@@ -107,7 +107,6 @@ public class SpiderAI : MonoBehaviour
         transform.forward = player.forward * -1;
         enemyAnim.SetTrigger("Attack");
 
-        Cursor.lockState = CursorLockMode.None;
         img_hitEffect.gameObject.SetActive(true);
 
         if(currentTime > 1.1f)
@@ -116,6 +115,7 @@ public class SpiderAI : MonoBehaviour
             img_hitEffect.gameObject.SetActive(false);
             currentTime = 0;
         }
+        img_hitEffect.gameObject.SetActive(false);
     }
 
     public void AttackDelay()

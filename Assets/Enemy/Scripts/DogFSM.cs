@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.UI;
 
 public class DogFSM : MonoBehaviour
 {
@@ -17,9 +18,6 @@ public class DogFSM : MonoBehaviour
     public EnemyState myState;
     public Animator enemyAnim;
     public Transform player;
-    public Collider walk;
-    public Collider run;
-    public GameObject img_dead;
     public GameObject img_hit;
 
     NavMeshAgent agent;
@@ -75,6 +73,20 @@ public class DogFSM : MonoBehaviour
             myState = EnemyState.Attack;
             enemyAnim.SetTrigger("Attack");
             currentTime = 0;
+
+            currentTime += Time.deltaTime;
+
+            img_hit.gameObject.SetActive(true);
+
+            if (currentTime >= 1)
+            {
+                img_hit.gameObject.SetActive(false);
+            }
+            if (currentTime >= 2.5f)
+            {
+                img_hit.gameObject.SetActive(true);
+                currentTime = 0;
+            }
         }
         //}
     }
@@ -160,8 +172,6 @@ public class DogFSM : MonoBehaviour
     public void Attack()
     {
         // 공격을 한다
-        img_hit.gameObject.SetActive(true);
-        img_dead.gameObject.SetActive(true);
     }
     
     //public void AttackDelay()

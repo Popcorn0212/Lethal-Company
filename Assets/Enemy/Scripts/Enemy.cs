@@ -45,5 +45,9 @@ public class Enemy : MonoBehaviour
                 currentTime = 0;
             }
         }
+        else
+        {
+            img_hit.gameObject.SetActive(false);
+        }
     }
 }

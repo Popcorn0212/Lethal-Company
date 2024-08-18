@@ -12,6 +12,8 @@ public class Lever : MonoBehaviour
     public GameObject shipCam;
     public GameObject settle;
     public GameObject img_failed;
+    public GameObject img_escape;
+    public GameObject fail;
 
     [Header("플레이어 게임오브젝트")]
     public Transform player;
@@ -88,9 +90,12 @@ public class Lever : MonoBehaviour
             {
                 if (st.totalValue >= 100)
                 {
+                    fail.gameObject.SetActive(false);
                     shipCam.gameObject.SetActive(true);
                     sc.isStart = true;
                     ps.stuckActive = true;
+                    img_escape.gameObject.SetActive(true);
+                    Cursor.lockState = CursorLockMode.None;
                 }
                 else
                 {

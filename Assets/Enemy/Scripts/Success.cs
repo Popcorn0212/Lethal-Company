@@ -8,6 +8,6 @@ public class Success : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        img_escape.gameObject.SetActive(true);
+        //img_escape.gameObject.SetActive(true);
     }
 }
