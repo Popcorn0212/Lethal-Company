@@ -6,6 +6,12 @@ using UnityEngine.UI;
 
 public class Lever : MonoBehaviour
 {
+    ShipController sc;
+    PosStuck ps;
+    public GameObject shipCam;
+    public Text text_curValue;
+    int maxValue = 100;
+
     [Header("플레이어 게임오브젝트")]
     public Transform player;
 
@@ -40,6 +46,10 @@ public class Lever : MonoBehaviour
 
     void Start()
     {
+        shipCam.gameObject.SetActive(false);
+        sc = transform.parent.GetComponent<ShipController>();
+        ps = player.GetComponent<PosStuck>();
+
         if (player == null)
         {
             Debug.LogWarning("Door :: Player 게임오브젝트를 변수에 할당하지 않음!");
@@ -70,30 +80,11 @@ public class Lever : MonoBehaviour
         {
             holdText.SetActive(true); //안내 텍스트 켜기
 
-            if (Input.GetKey(KeyCode.E)) //문 앞에서 e키를 꾹 누른 채 대기하기.
+            if (Input.GetKeyDown(KeyCode.E)) //문 앞에서 e키를 꾹 누른 채 대기하기.
             {
-                currentHoldTime += Time.deltaTime; //얼마나 누르고 있나 시간 측정...
-
-                if (progressSlider != null)
-                {
-                    progressSlider.value = currentHoldTime; // 진행도를 Slider에 반영
-                    progressSlider.gameObject.SetActive(true); // Slider 활성화
-                }
-
-                if (currentHoldTime > doorHoldTime) //내가 정한 시간을 넘어가면!
-                {
-                    //함선이 흔들리며 뭔가가 일어난다.
-                    //함선 흔들어제끼기
-                    camshake.letsShake = true;
-
-                    //인보크로 1초 뒤에 씬넘어가기
-                    Invoke("LoadScene", 1.5f);
-                }
-            }
-            else
-            {
-                currentHoldTime = 0;
-                SliderReset();
+                shipCam.gameObject.SetActive(true);
+                sc.isStart = true;
+                ps.stuckActive = true;
             }
         }
     }

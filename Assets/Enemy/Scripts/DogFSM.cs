@@ -25,7 +25,7 @@ public class DogFSM : MonoBehaviour
     Vector3 nextPos;
     float currentTime = 0;
     float idleTime = 3;
-    float walkRad = 10;
+    float walkRad = 20;
 
 
     void Start()
@@ -53,9 +53,9 @@ public class DogFSM : MonoBehaviour
             case EnemyState.Attack:
                 Attack();
                 break;
-            case EnemyState.AttackDelay:
-                AttackDelay();
-                break;
+            //case EnemyState.AttackDelay:
+            //    AttackDelay();
+            //    break;
         }
     }
 
@@ -63,20 +63,32 @@ public class DogFSM : MonoBehaviour
     {
         //if(walk || run)
         //{
-           // myState = EnemyState.Trace;
-           // enemyAnim.SetTrigger("Trace");
+        // myState = EnemyState.Trace;
+        // enemyAnim.SetTrigger("Trace");
 
-            //if (other.gameObject.name == "Player")
-            //{
-            //    myState = EnemyState.Attack;
-            //    enemyAnim.SetTrigger("Attack");
-            //}
+        if (other.gameObject.name == "Player")
+        {
+            myState = EnemyState.Attack;
+            enemyAnim.SetTrigger("Attack");
+            currentTime = 0;
+        }
         //}
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.gameObject.name == "Player")
+        {
+            myState = EnemyState.Trace;
+            enemyAnim.SetTrigger("Trace");
+            currentTime = 0;
+        }
     }
 
     public void Idle()
     {
         currentTime += Time.deltaTime;
+
         if(currentTime > idleTime)
         {
             currentTime = 0;
@@ -89,6 +101,8 @@ public class DogFSM : MonoBehaviour
 
     public void Walk()
     {
+        currentTime = 0;
+
         Vector3 dir = nextPos - transform.position;
         Vector3 target = player.position - transform.position;
 
@@ -104,7 +118,7 @@ public class DogFSM : MonoBehaviour
             agent.ResetPath();
         }
 
-        if(target.magnitude < 5)
+        if (target.magnitude < 10)
         {
             myState = EnemyState.Trace;
             enemyAnim.SetTrigger("Trace");
@@ -114,24 +128,25 @@ public class DogFSM : MonoBehaviour
     
     public void Trace()
     {
+        currentTime = 0;
+
         agent.SetDestination(player.position);
-        enemyAnim.SetTrigger("Trace");
+        agent.speed = 9;
 
         Vector3 dir = player.position - transform.position;
-        dir.y = 0;
 
-        if (dir.magnitude < 0.3f)
+        if (dir.magnitude <= 0.5f)
         {
             // 공격 범위 이내로 들어가면 상태를 Attack 상태로 전환한다.
-            currentTime = 0;
+            //currentTime = 0;
 
             // 타겟을 향해 회전한다.
-            Vector3 lookDir = player.position - transform.position;
-            lookDir.Normalize();
-            transform.rotation = Quaternion.LookRotation(lookDir);
+            //Vector3 lookDir = player.position - transform.position;
+            //lookDir.Normalize();
+            //transform.rotation = Quaternion.LookRotation(lookDir);
 
-            myState = EnemyState.Attack;
-            enemyAnim.SetTrigger("Attack");
+            //myState = EnemyState.Attack;
+            //enemyAnim.SetTrigger("Attack");
 
             agent.isStopped = true;
             agent.ResetPath();
@@ -140,32 +155,22 @@ public class DogFSM : MonoBehaviour
     
     public void Attack()
     {
+        currentTime += Time.deltaTime;
         // 공격을 한다
 
-
-        float dist = Vector3.Distance(transform.position, player.position);
-
-        if (dist > 0.3f)
-        {
-            // 다시 추격 상태로 전환한다.
-            agent.isStopped = false;
-            myState = EnemyState.Trace;
-            enemyAnim.SetTrigger("Trace");
-            currentTime = 0;
-            return;
-        }
+        
     }
     
-    public void AttackDelay()
-    {
-        currentTime += Time.deltaTime;
-        enemyAnim.SetTrigger("AttackDelay");
+    //public void AttackDelay()
+    //{
+    //    currentTime += Time.deltaTime;
+    //    enemyAnim.SetTrigger("AttackDelay");
 
-        if (currentTime > 2)
-        {
-            currentTime = 0;
-            myState = EnemyState.Attack;
-            enemyAnim.SetTrigger("Attack");
-        }
-    }
+    //    if (currentTime >= 2)
+    //    {
+    //        currentTime = 0;
+    //        myState = EnemyState.Attack;
+    //        enemyAnim.SetTrigger("Attack");
+    //    }
+    //}
 }
