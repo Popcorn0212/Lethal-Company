@@ -2,7 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UIElements;
+using UnityEngine.UI;
 
 public class PlayerMove : MonoBehaviour
 {
@@ -27,11 +27,16 @@ public class PlayerMove : MonoBehaviour
     public int maxJumpCount = 2;
     int jumpCount;
 
+    public Image img_hitUI;
+
     float rotX;
     public float rotY;
     float yPos;
 
     CharacterController cc;
+
+    SprintCam SprintCam;
+    public GameObject sprintCam;
 
     Vector3 gravityPower;
 
@@ -51,6 +56,8 @@ public class PlayerMove : MonoBehaviour
         jumpCount = maxJumpCount;
 
         characterController = GetComponent<CharacterController>();
+
+        SprintCam = sprintCam.GetComponent<SprintCam>();
     }
 
     void Update()
@@ -137,7 +144,7 @@ public class PlayerMove : MonoBehaviour
         }
         else
         {
-            moveSpeed = 5; 
+            moveSpeed = 5;
             if (currentStamina < maxStamina)
             {
                 currentStamina += 0.3f;
@@ -178,11 +185,13 @@ public class PlayerMove : MonoBehaviour
         {
             if (currentTime > hitDelay)
             {
-                hp--;
+                //hp--;
                 currentTime = 0;
+                TakeDamage(1);
             }
 
         }
+
     }
 
     private void OnTriggerEnter(Collider other)
@@ -214,5 +223,13 @@ public class PlayerMove : MonoBehaviour
     private bool IsLadder(Collider collider)
     {
         return ladderMask == (ladderMask | (1 << collider.gameObject.layer));
+    }
+
+    public void TakeDamage(int damage)
+    {
+        // HP °¨¼Ò
+        hp -= damage;
+        SprintCam.TriggerShake();
+
     }
 }
