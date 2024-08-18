@@ -2,7 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UIElements;
+using UnityEngine.UI;
 
 public class PlayerMove : MonoBehaviour
 {
@@ -19,9 +19,11 @@ public class PlayerMove : MonoBehaviour
     public float jumpPower = 20.0f;
     public float maxStamina = 100;
     public float currentStamina;
+    public float currentTime;
+    public float hitDelay = 1.5f;
     public bool staminaOring = false;
     public bool isSprint = false;
-    public int hp = 3;
+    public int hp = 4;
     public int maxJumpCount = 2;
     int jumpCount;
 
@@ -31,10 +33,15 @@ public class PlayerMove : MonoBehaviour
 
     CharacterController cc;
 
+    SprintCam SprintCam;
+    public GameObject sprintCam;
+
     Vector3 gravityPower;
 
     void Start()
     {
+        sprintCam = GameObject.Find("Main Camera");
+
         UnityEngine.Cursor.lockState = CursorLockMode.Locked;
 
         // 최초의 회전 상태로 시작을 하고싶다.
@@ -49,6 +56,8 @@ public class PlayerMove : MonoBehaviour
         jumpCount = maxJumpCount;
 
         characterController = GetComponent<CharacterController>();
+
+        SprintCam = sprintCam.GetComponent<SprintCam>();
     }
 
     void Update()
@@ -64,6 +73,8 @@ public class PlayerMove : MonoBehaviour
             Vector3 climbDirection = orientation.up * verticalInput; // 오르는 방향
             characterController.Move(climbDirection * climbSpeed * Time.deltaTime);
         }
+
+        currentTime += Time.deltaTime;
     }
 
     void Move()
@@ -133,7 +144,7 @@ public class PlayerMove : MonoBehaviour
         }
         else
         {
-            moveSpeed = 5; 
+            moveSpeed = 5;
             if (currentStamina < maxStamina)
             {
                 currentStamina += 0.3f;
@@ -168,6 +179,21 @@ public class PlayerMove : MonoBehaviour
         HeadMove.rotY = rotY;
     }
 
+    private void OnTriggerStay(Collider other)
+    {
+        if (other.tag == "Slime")
+        {
+            if (currentTime > hitDelay)
+            {
+                //hp--;
+                currentTime = 0;
+                TakeDamage(1);
+            }
+
+        }
+
+    }
+
     private void OnTriggerEnter(Collider other)
     {
         if (IsLadder(other))
@@ -178,6 +204,8 @@ public class PlayerMove : MonoBehaviour
             yVelocity = 0;
             moveSpeed = 5;
         }
+
+
     }
 
     private void OnTriggerExit(Collider other)
@@ -195,5 +223,13 @@ public class PlayerMove : MonoBehaviour
     private bool IsLadder(Collider collider)
     {
         return ladderMask == (ladderMask | (1 << collider.gameObject.layer));
+    }
+
+    public void TakeDamage(int damage)
+    {
+        // HP 감소
+        hp -= damage;
+        SprintCam.TriggerShake();
+
     }
 }
