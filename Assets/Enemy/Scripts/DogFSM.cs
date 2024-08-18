@@ -19,7 +19,9 @@ public class DogFSM : MonoBehaviour
     public Animator enemyAnim;
     public Transform player;
     public GameObject img_hit;
+    public GameObject model;
 
+    AudioSource hitSound;
     NavMeshAgent agent;
     Transform target;
     Vector3 curPos;
@@ -32,6 +34,7 @@ public class DogFSM : MonoBehaviour
 
     void Start()
     {
+        hitSound = model.GetComponent<AudioSource>();
         myState = EnemyState.Idle;
         agent = GetComponent<NavMeshAgent>();
         curPos = transform.position;
@@ -172,6 +175,7 @@ public class DogFSM : MonoBehaviour
     public void Attack()
     {
         // 공격을 한다
+        hitSound.Play();
     }
     
     //public void AttackDelay()

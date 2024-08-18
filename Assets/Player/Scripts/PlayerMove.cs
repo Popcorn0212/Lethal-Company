@@ -9,6 +9,7 @@ public class PlayerMove : MonoBehaviour
     public float climbSpeed = 3f; // 사다리를 오르는 속도
     public LayerMask ladderMask; // 사다리 레이어
     public Transform orientation; // 카메라나 플레이어의 방향을 조정하기 위한 변수
+    AudioSource footstep;
 
     private bool isClimbing = false; // 현재 클라이밍 상태
     private CharacterController characterController;
@@ -40,6 +41,8 @@ public class PlayerMove : MonoBehaviour
 
     void Start()
     {
+        footstep = GetComponent<AudioSource>();
+
         sprintCam = GameObject.Find("Main Camera");
 
         UnityEngine.Cursor.lockState = CursorLockMode.Locked;
@@ -140,15 +143,28 @@ public class PlayerMove : MonoBehaviour
             if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.D))
             {
                 currentStamina -= 0.1f;
+                footstep.pitch = 0.9f;
             }
         }
         else
         {
             moveSpeed = 5;
+            footstep.pitch = 0.5f;
+
             if (currentStamina < maxStamina)
             {
                 currentStamina += 0.3f;
             }
+        }
+
+        if (Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.S) || Input.GetKeyDown(KeyCode.D))
+        {
+            footstep.pitch = 0.5f;
+            footstep.Play();
+        }
+        if (Input.GetKeyUp(KeyCode.W) || Input.GetKeyUp(KeyCode.A) || Input.GetKeyUp(KeyCode.S) || Input.GetKeyUp(KeyCode.D))
+        {
+            footstep.Pause();
         }
 
 

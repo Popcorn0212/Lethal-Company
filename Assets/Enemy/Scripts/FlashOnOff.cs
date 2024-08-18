@@ -8,6 +8,7 @@ public class FlashOnOff : MonoBehaviour
     public GameObject light;
     bool isHand = false;
     bool isOn = false;
+    AudioSource btnSound;
 
     void Start()
     {
@@ -15,6 +16,7 @@ public class FlashOnOff : MonoBehaviour
         light.gameObject.SetActive(false);
         isHand = false;
         isOn = false;
+        btnSound = flash.GetComponent<AudioSource>();
     }
 
     void Update()
@@ -45,6 +47,7 @@ public class FlashOnOff : MonoBehaviour
         {
             if (Input.GetButtonDown("R"))
             {
+                btnSound.Play();
                 isOn = true;
                 light.gameObject.SetActive(true);
             }
@@ -53,6 +56,7 @@ public class FlashOnOff : MonoBehaviour
         {
             if (Input.GetButtonDown("R"))
             {
+                btnSound.Play();
                 isOn = false;
                 light.gameObject.SetActive(false);
             }

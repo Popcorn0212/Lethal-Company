@@ -14,6 +14,8 @@ public class HPUI : MonoBehaviour
     public GameObject shipCam;
     public GameObject shipControl;
     public GameObject playerObj;
+    public GameObject playerHead;
+    AudioSource hitSound;
 
     float currentTime = 0;
     bool isTimer = false;
@@ -27,6 +29,7 @@ public class HPUI : MonoBehaviour
         img_dead.gameObject.SetActive(false);
         player = GameObject.Find("Player");
         sc = shipControl.GetComponent<ShipController>();
+        hitSound = playerHead.GetComponent<AudioSource>();
         currentTime = 0;
 
         if (player != null)
@@ -55,18 +58,22 @@ public class HPUI : MonoBehaviour
 
         if (currentHP == 3)
         {
+            hitSound.Play();
             hpImage.color = Color.white;
         }
         if (currentHP == 2)
         {
+            hitSound.Play();
             hpImage.color = Color.yellow;
         }
         if (currentHP == 1)
         {
+            hitSound.Play();
             hpImage.color = Color.red;
         }
         if (currentHP == 0)
         {
+            hitSound.Play();
             hpImage.color = Color.red;
             playerObj.gameObject.SetActive(false);
             isTimer = true;

@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class ShipDoor : MonoBehaviour
 {
+    AudioSource doorSound;
 
     [Header("플레이어 게임오브젝트")]
     public Transform player;
@@ -40,6 +41,7 @@ public class ShipDoor : MonoBehaviour
     void Start()
     {
         openUI.SetActive(false);
+        doorSound = GetComponent<AudioSource>();
     }
 
     void Update()
@@ -70,6 +72,8 @@ public class ShipDoor : MonoBehaviour
             delayTime -= Time.deltaTime;
             if (delayTime < 0 && Input.GetKey(KeyCode.E)) //문 앞에서 e키를 누르면 문이 열림.
             {
+                doorSound.Play();
+
                 #region 실패했지만 보존가치있는 코드
                 //이렇게 하니까 조금 누르면 조금 열린다 캐신기하다
                 //혹시모르니 보존

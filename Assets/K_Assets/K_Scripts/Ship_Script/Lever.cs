@@ -13,7 +13,7 @@ public class Lever : MonoBehaviour
     public GameObject settle;
     public GameObject img_failed;
     public GameObject img_escape;
-    public GameObject fail;
+    AudioSource leverSound;
 
     [Header("플레이어 게임오브젝트")]
     public Transform player;
@@ -54,6 +54,7 @@ public class Lever : MonoBehaviour
         ps = player.GetComponent<PosStuck>();
         st = settle.GetComponent<Settle>();
         img_failed.gameObject.SetActive(false);
+        leverSound = GetComponent<AudioSource>();
 
 
         if (player == null)
@@ -88,9 +89,10 @@ public class Lever : MonoBehaviour
 
             if (Input.GetKeyDown(KeyCode.E)) //문 앞에서 e키를 꾹 누른 채 대기하기.
             {
+                leverSound.Play();
+
                 if (st.totalValue >= 100)
                 {
-                    fail.gameObject.SetActive(false);
                     shipCam.gameObject.SetActive(true);
                     sc.isStart = true;
                     ps.stuckActive = true;

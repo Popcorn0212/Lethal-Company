@@ -11,6 +11,7 @@ public class AimInteraction : MonoBehaviour
     public bool targetIsLadder = false;
     public int nowInvenSlot = 1;
     Scrap scrap;
+    AudioSource scrapSound;
 
     public Transform hand;
     public Transform dropPoint;
@@ -25,6 +26,7 @@ public class AimInteraction : MonoBehaviour
 
     void Start()
     {
+        scrapSound = GetComponent<AudioSource>();
         nowInvenSlot = 1;
         player = GameObject.Find("Player");
         useLadder = false;
@@ -75,6 +77,7 @@ public class AimInteraction : MonoBehaviour
 
         if (isInteraction && Input.GetKeyDown(KeyCode.E))
         {
+            scrapSound.Play();
 
             for (int i = 0; i < inventorySlot.Count; i++)
             {
@@ -92,6 +95,8 @@ public class AimInteraction : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.F))
         {
+            scrapSound.Play();
+
             if (nowInvenSlot == 1 && inventorySlot[1] != null)
             {
                 scrap = inventorySlot[1].gameObject.GetComponent<Scrap>();

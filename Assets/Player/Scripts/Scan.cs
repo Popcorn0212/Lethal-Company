@@ -7,11 +7,13 @@ public class Scan : MonoBehaviour
     public List<GameObject> scraps;
     private List<Scrap> scrapComponents;
     Scrap Scrap;
+    AudioSource scanSound;
 
     void Start()
     {
         scraps = new List<GameObject>();
         scrapComponents = new List<Scrap>();
+        scanSound = GetComponent<AudioSource>();
     }
 
 
@@ -34,6 +36,7 @@ public class Scan : MonoBehaviour
                     {
                         if (Input.GetMouseButtonDown(1))
                         {
+                            scanSound.Play();
                             // 카메라의 시야에 있는 오브젝트를 리스트에 추가합니다.
                             scraps.Add(collider.gameObject);
                             if (scraps[0] != null)

@@ -19,7 +19,9 @@ public class SpiderAI : MonoBehaviour
     public Transform player;
     public Transform target;  // 타겟(감지된 거미줄)의 위치를 지정
     public GameObject img_hitEffect;
+    public GameObject model;
 
+    AudioSource hitSound;
     NavMeshAgent agent;  // NavMeshAgent 컴포넌트를 저장할 변수
     float currentTime;
     int hitCount = 0;
@@ -27,6 +29,7 @@ public class SpiderAI : MonoBehaviour
 
     void Start()
     {
+        hitSound = model.GetComponent<AudioSource>();
         agent = GetComponent<NavMeshAgent>();  // NavMeshAgent 컴포넌트를 가져오기
         myState = EnemyState.Idle;
         hitCount = 0;
@@ -106,6 +109,7 @@ public class SpiderAI : MonoBehaviour
         currentTime += Time.deltaTime;
         transform.forward = player.forward * -1;
         enemyAnim.SetTrigger("Attack");
+        hitSound.Play();
 
         img_hitEffect.gameObject.SetActive(true);
 
