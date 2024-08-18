@@ -420,6 +420,7 @@ GameObject:
   - component: {fileID: 1307234590851153617}
   - component: {fileID: 5112671650488033996}
   - component: {fileID: 2255202735182552190}
+  - component: {fileID: 8060509213375666798}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -577,7 +578,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fcc9fb83b948adf4995976f02c72da0f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  objectNames: []
+  scraps: []
+--- !u!114 &8060509213375666798
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3857340033488335067}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 50f13e02e560b264a9208dde5b9982be, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  shakeAmount: 0.1
+  shakeFrequency: 15
+  shakeAmount2: 0.2
+  shakeFrequency2: 30
+  shouldShake: 0
 --- !u!1 &4575198430697947482
 GameObject:
   m_ObjectHideFlags: 0
@@ -1213,11 +1231,14 @@ MonoBehaviour:
   jumpPower: 2.4
   maxStamina: 100
   currentStamina: 100.002144
+  currentTime: 0
+  hitDelay: 1.5
   staminaOring: 0
   isSprint: 0
   hp: 3
   maxJumpCount: 1
   rotY: 399.03192
+  sprintCam: {fileID: 3857340033488335067}
 --- !u!114 &2120737681941729317
 MonoBehaviour:
   m_ObjectHideFlags: 0

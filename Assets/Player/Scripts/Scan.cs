@@ -36,8 +36,27 @@ public class Scan : MonoBehaviour
                         {
                             // 카메라의 시야에 있는 오브젝트를 리스트에 추가합니다.
                             scraps.Add(collider.gameObject);
-                            Scrap = scraps[0].GetComponent<Scrap>();
-                            Scrap.isScaned = true;
+                            if (scraps[0] != null)
+                            {
+                                Scrap = scraps[0].GetComponent<Scrap>();
+                                Scrap.isScaned = true;
+                            }
+                            //if (scraps[1] != null)
+                            //{
+                            //    Scrap = scraps[1].GetComponent<Scrap>();
+                            //    Scrap.isScaned = true;
+                            //}
+                            //if (scraps[2] != null)
+                            //{
+                            //    Scrap = scraps[2].GetComponent<Scrap>();
+                            //    Scrap.isScaned = true;
+                            //}
+                            //if (scraps[3] != null)
+                            //{
+                            //    Scrap = scraps[3].GetComponent<Scrap>();
+                            //    Scrap.isScaned = true;
+                            //}
+                            scraps.Clear();
                         }
                     }
                 }

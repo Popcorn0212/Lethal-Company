@@ -10,6 +10,7 @@ TagManager:
   - Ground
   - Walk
   - Run
+  - Slime
   layers:
   - Default
   - TransparentFX
