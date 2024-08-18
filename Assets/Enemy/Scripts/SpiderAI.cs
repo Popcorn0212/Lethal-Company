@@ -18,7 +18,6 @@ public class SpiderAI : MonoBehaviour
     public Animator enemyAnim;
     public Transform player;
     public Transform target;  // 타겟(감지된 거미줄)의 위치를 지정
-    public GameObject img_dead;  // 사망 화면 지정
     public GameObject img_hitEffect;
 
     NavMeshAgent agent;  // NavMeshAgent 컴포넌트를 저장할 변수
@@ -49,11 +48,6 @@ public class SpiderAI : MonoBehaviour
             case EnemyState.AttackDelay:
                 AttackDelay();
                 break;
-        }
-
-        if(hitCount >= 4)
-        {
-            img_dead.gameObject.SetActive(true);
         }
     }
 
@@ -115,10 +109,6 @@ public class SpiderAI : MonoBehaviour
 
         Cursor.lockState = CursorLockMode.None;
         img_hitEffect.gameObject.SetActive(true);
-        if (img_hitEffect == true)
-        {
-            hitCount++;
-        }
 
         if(currentTime > 1.1f)
         {

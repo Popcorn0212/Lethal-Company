@@ -7,10 +7,11 @@ using UnityEngine.UI;
 public class Lever : MonoBehaviour
 {
     ShipController sc;
+    Settle st;
     PosStuck ps;
     public GameObject shipCam;
-    public Text text_curValue;
-    int maxValue = 100;
+    public GameObject settle;
+    public GameObject img_failed;
 
     [Header("플레이어 게임오브젝트")]
     public Transform player;
@@ -49,6 +50,9 @@ public class Lever : MonoBehaviour
         shipCam.gameObject.SetActive(false);
         sc = transform.parent.GetComponent<ShipController>();
         ps = player.GetComponent<PosStuck>();
+        st = settle.GetComponent<Settle>();
+        img_failed.gameObject.SetActive(false);
+
 
         if (player == null)
         {
@@ -82,9 +86,16 @@ public class Lever : MonoBehaviour
 
             if (Input.GetKeyDown(KeyCode.E)) //문 앞에서 e키를 꾹 누른 채 대기하기.
             {
-                shipCam.gameObject.SetActive(true);
-                sc.isStart = true;
-                ps.stuckActive = true;
+                if (st.totalValue >= 100)
+                {
+                    shipCam.gameObject.SetActive(true);
+                    sc.isStart = true;
+                    ps.stuckActive = true;
+                }
+                else
+                {
+                    img_failed.gameObject.SetActive(true);
+                }
             }
         }
     }

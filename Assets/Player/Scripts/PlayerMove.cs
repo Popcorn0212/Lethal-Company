@@ -181,8 +181,9 @@ public class PlayerMove : MonoBehaviour
 
     private void OnTriggerStay(Collider other)
     {
-        if (other.tag == "Slime")
+        if (other.tag == "Enemy")
         {
+
             if (currentTime > hitDelay)
             {
                 //hp--;

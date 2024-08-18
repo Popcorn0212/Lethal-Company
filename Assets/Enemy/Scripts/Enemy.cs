@@ -9,6 +9,9 @@ public class Enemy : MonoBehaviour
 
     public Transform target;  // 타겟(플레이어)의 위치를 지정
     public GameObject img_dead;  // 사망 화면 지정
+    public GameObject img_hit;
+    float currentTime = 0;
+    bool isHit = false;
 
     void Start()
     {
@@ -24,13 +27,23 @@ public class Enemy : MonoBehaviour
         }
     }
 
-    // 플레이어와 접촉시 사망 화면 활성화
-    private void OnTriggerEnter(Collider other)
+    // 플레이어와 접촉시 피격 화면 활성화
+    private void OnTriggerStay(Collider other)
     {
-        if(other.gameObject.name == "Player")
+        if (other.gameObject.name == "Player")
         {
-            Cursor.lockState = CursorLockMode.None;
-            img_dead.gameObject.SetActive(true);
+            currentTime += Time.deltaTime;
+            img_hit.gameObject.SetActive(true);
+
+            if (currentTime >= 1)
+            {
+                img_hit.gameObject.SetActive(false);
+            }
+            if(currentTime >= 2.5f)
+            {
+                img_hit.gameObject.SetActive(true);
+                currentTime = 0;
+            }
         }
     }
 }

@@ -8,12 +8,15 @@ public class HPUI : MonoBehaviour
     public Image hpImage;
 
     public int currentHP = 3;
+    public GameObject img_dead;
 
     PlayerMove PlayerMove;
     GameObject player;
 
     void Start()
     {
+        img_dead.gameObject.SetActive(false);
+
         player = GameObject.Find("Player");
         if (player != null)
         {
@@ -48,6 +51,7 @@ public class HPUI : MonoBehaviour
         if (currentHP == 0)
         {
             hpImage.color = Color.red;
+            img_dead.gameObject.SetActive(true);
         }
     }
 }

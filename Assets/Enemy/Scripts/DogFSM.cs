@@ -19,10 +19,14 @@ public class DogFSM : MonoBehaviour
     public Transform player;
     public Collider walk;
     public Collider run;
+    public GameObject img_dead;
+    public GameObject img_hit;
+
     NavMeshAgent agent;
     Transform target;
     Vector3 curPos;
     Vector3 nextPos;
+
     float currentTime = 0;
     float idleTime = 3;
     float walkRad = 20;
@@ -155,10 +159,9 @@ public class DogFSM : MonoBehaviour
     
     public void Attack()
     {
-        currentTime += Time.deltaTime;
         // 공격을 한다
-
-        
+        img_hit.gameObject.SetActive(true);
+        img_dead.gameObject.SetActive(true);
     }
     
     //public void AttackDelay()
