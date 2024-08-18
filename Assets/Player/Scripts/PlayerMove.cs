@@ -27,8 +27,6 @@ public class PlayerMove : MonoBehaviour
     public int maxJumpCount = 2;
     int jumpCount;
 
-    public Image img_hitUI;
-
     float rotX;
     public float rotY;
     float yPos;
@@ -42,6 +40,8 @@ public class PlayerMove : MonoBehaviour
 
     void Start()
     {
+        sprintCam = GameObject.Find("Main Camera");
+
         UnityEngine.Cursor.lockState = CursorLockMode.Locked;
 
         // 최초의 회전 상태로 시작을 하고싶다.
