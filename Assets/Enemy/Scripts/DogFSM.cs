@@ -11,23 +11,29 @@ public class DogFSM : MonoBehaviour
         Walk,
         Trace,
         Attack,
-        ReTrace,
         AttackDelay,
     }
 
     public EnemyState myState;
     public Animator enemyAnim;
     public Transform player;
+    public Collider walk;
+    public Collider run;
     NavMeshAgent agent;
     Transform target;
+    Vector3 curPos;
+    Vector3 nextPos;
     float currentTime = 0;
+    float idleTime = 3;
+    float walkRad = 10;
 
 
     void Start()
     {
         myState = EnemyState.Idle;
-        enemyAnim = GetComponent<Animator>();
         agent = GetComponent<NavMeshAgent>();
+        curPos = transform.position;
+        nextPos = curPos;
         currentTime = 0;
     }
 
@@ -47,76 +53,107 @@ public class DogFSM : MonoBehaviour
             case EnemyState.Attack:
                 Attack();
                 break;
-            case EnemyState.ReTrace:
-                ReTrace();
-                break;
             case EnemyState.AttackDelay:
                 AttackDelay();
                 break;
-        }
-
-        if(target != null)
-        {
-            agent.SetDestination(target.position);
         }
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        if(other.gameObject.name == "Walk" || other.gameObject.name == "Run")
-        {
-            myState = EnemyState.Trace;
-        }
+        //if(walk || run)
+        //{
+           // myState = EnemyState.Trace;
+           // enemyAnim.SetTrigger("Trace");
 
-        if(other.gameObject.name == "Player")
-        {
-            myState = EnemyState.Attack;
-        }
-    }
-
-    private void OnTriggerExit(Collider other)
-    {
-        if(other.gameObject.name == "Player")
-        {
-            myState = EnemyState.ReTrace;
-        }
+            //if (other.gameObject.name == "Player")
+            //{
+            //    myState = EnemyState.Attack;
+            //    enemyAnim.SetTrigger("Attack");
+            //}
+        //}
     }
 
     public void Idle()
     {
-        enemyAnim.SetBool("isWalk", false);
+        currentTime += Time.deltaTime;
+        if(currentTime > idleTime)
+        {
+            currentTime = 0;
+            myState = EnemyState.Walk;
+            enemyAnim.SetBool("isWalk", true);
 
+            agent.SetDestination(nextPos);
+        }
     }
 
     public void Walk()
     {
-        enemyAnim.SetBool("isWalk", true);
+        Vector3 dir = nextPos - transform.position;
+        Vector3 target = player.position - transform.position;
 
+        if(dir.magnitude < 0.5f)
+        {
+            Vector2 newPos = Random.insideUnitCircle * walkRad;
+            nextPos = curPos + new Vector3(newPos.x, 0, newPos.y);
+
+            myState = EnemyState.Idle;
+            enemyAnim.SetBool("isWalk", false);
+
+            agent.isStopped = true;
+            agent.ResetPath();
+        }
+
+        if(target.magnitude < 5)
+        {
+            myState = EnemyState.Trace;
+            enemyAnim.SetTrigger("Trace");
+            agent.isStopped = false;
+        }
     }
     
     public void Trace()
     {
-        target = player;
-        enemyAnim.SetBool("isTrace", true);
+        agent.SetDestination(player.position);
+        enemyAnim.SetTrigger("Trace");
+
+        Vector3 dir = player.position - transform.position;
+        dir.y = 0;
+
+        if (dir.magnitude < 0.3f)
+        {
+            // 공격 범위 이내로 들어가면 상태를 Attack 상태로 전환한다.
+            currentTime = 0;
+
+            // 타겟을 향해 회전한다.
+            Vector3 lookDir = player.position - transform.position;
+            lookDir.Normalize();
+            transform.rotation = Quaternion.LookRotation(lookDir);
+
+            myState = EnemyState.Attack;
+            enemyAnim.SetTrigger("Attack");
+
+            agent.isStopped = true;
+            agent.ResetPath();
+        }
     }
     
     public void Attack()
     {
-        currentTime += Time.deltaTime;
-        transform.forward = player.position;
-        enemyAnim.SetTrigger("Attack");
+        // 공격을 한다
 
-        if(currentTime > 1)
+
+        float dist = Vector3.Distance(transform.position, player.position);
+
+        if (dist > 0.3f)
         {
-            myState = EnemyState.AttackDelay;
+            // 다시 추격 상태로 전환한다.
+            agent.isStopped = false;
+            myState = EnemyState.Trace;
+            enemyAnim.SetTrigger("Trace");
             currentTime = 0;
+            return;
         }
-    }
-
-    public void ReTrace()
-    {
-        target = player;
-        enemyAnim.SetTrigger("ReTrace");
     }
     
     public void AttackDelay()
@@ -124,10 +161,11 @@ public class DogFSM : MonoBehaviour
         currentTime += Time.deltaTime;
         enemyAnim.SetTrigger("AttackDelay");
 
-        if(currentTime > 2)
+        if (currentTime > 2)
         {
-            myState = EnemyState.Attack;
             currentTime = 0;
+            myState = EnemyState.Attack;
+            enemyAnim.SetTrigger("Attack");
         }
     }
 }

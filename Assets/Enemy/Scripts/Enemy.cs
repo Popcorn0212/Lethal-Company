@@ -18,7 +18,10 @@ public class Enemy : MonoBehaviour
 
     void Update()
     {
-        agent.SetDestination(target.position);  // 지정한 타겟으로 목적지를 설정
+        if (target != null)
+        {
+            agent.SetDestination(target.position);  // 지정한 타겟으로 목적지를 설정
+        }
     }
 
     // 플레이어와 접촉시 사망 화면 활성화

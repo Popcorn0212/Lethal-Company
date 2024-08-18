@@ -8,6 +8,8 @@ TagManager:
   - Ladder
   - Hand
   - Ground
+  - Walk
+  - Run
   layers:
   - Default
   - TransparentFX
