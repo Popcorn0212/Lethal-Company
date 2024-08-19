@@ -30,24 +30,24 @@ public class Enemy : MonoBehaviour
     // 플레이어와 접촉시 피격 화면 활성화
     private void OnTriggerStay(Collider other)
     {
-        if (other.gameObject.name == "Player")
-        {
-            currentTime += Time.deltaTime;
-            img_hit.gameObject.SetActive(true);
+        //if (other.gameObject.name == "Player")
+        //{
+        //    currentTime += Time.deltaTime;
+        //    img_hit.gameObject.SetActive(true);
 
-            if (currentTime >= 1)
-            {
-                img_hit.gameObject.SetActive(false);
-            }
-            if(currentTime >= 2.5f)
-            {
-                img_hit.gameObject.SetActive(true);
-                currentTime = 0;
-            }
-        }
-        else
-        {
-            img_hit.gameObject.SetActive(false);
-        }
+        //    if (currentTime >= 1)
+        //    {
+        //        img_hit.gameObject.SetActive(false);
+        //    }
+        //    if(currentTime >= 2.5f)
+        //    {
+        //        img_hit.gameObject.SetActive(true);
+        //        currentTime = 0;
+        //    }
+        //}
+        //else
+        //{
+        //    img_hit.gameObject.SetActive(false);
+        //}
     }
 }

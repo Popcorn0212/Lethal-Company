@@ -10,6 +10,8 @@ public class TimeSystem : MonoBehaviour
     public List<Image> img_timeIcons = new List<Image>();  // 시간대 별로 표시 아이콘들을 지정
     public GameObject img_dead;  // 사망 화면 저장
     public GameObject dog;
+    public GameObject day;
+    public GameObject night;
 
     float min;  // 분
     int hour = 8;  // 시
@@ -50,7 +52,9 @@ public class TimeSystem : MonoBehaviour
         if(hour >= 12 && (int)min > 0)
         {
             hour = 1;  // 1로 변경
-            text_dayTime.text = "오후";  // 타이머 텍스트를 "오후"로 변경
+            day.gameObject.SetActive(false);
+            night.gameObject.SetActive(true);
+            //text_dayTime.text = "오후";  // 타이머 텍스트를 "오후"로 변경
             img_timeIcons[0].gameObject.SetActive(false);  // 오전 시간 아이콘을 비활성화
             img_timeIcons[1].gameObject.SetActive(true);  // 오후 시간 이이콘을 활성화
         }

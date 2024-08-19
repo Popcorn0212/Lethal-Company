@@ -21,11 +21,11 @@ public class FlashOnOff : MonoBehaviour
 
     void Update()
     {
-        if(Input.GetKeyDown(KeyCode.Alpha1) || Input.GetKeyDown(KeyCode.Alpha2) || Input.GetKeyDown(KeyCode.Alpha3) || Input.GetKeyDown(KeyCode.Alpha4))
-        {
-            isHand = false;
-            flash.gameObject.SetActive(false);
-        }
+        //if(Input.GetKeyDown(KeyCode.Alpha1) || Input.GetKeyDown(KeyCode.Alpha2) || Input.GetKeyDown(KeyCode.Alpha3) || Input.GetKeyDown(KeyCode.Alpha4))
+        //{
+        //    isHand = false;
+        //    flash.gameObject.SetActive(false);
+        //}
         if (!isHand)
         {
             if (Input.GetKeyDown(KeyCode.Alpha5))

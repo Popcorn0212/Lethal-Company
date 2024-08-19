@@ -83,7 +83,7 @@ public class HPUI : MonoBehaviour
             if(currentTime >= 2.5f)
             {
                 Cursor.lockState = CursorLockMode.None;
-                img_hit.gameObject.SetActive(false);
+                //img_hit.gameObject.SetActive(false);
                 shipCam.gameObject.SetActive(true);
                 sc.isStart = true;
                 currentTime = 0;

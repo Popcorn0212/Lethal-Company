@@ -111,21 +111,21 @@ public class SpiderAI : MonoBehaviour
         enemyAnim.SetTrigger("Attack");
         hitSound.Play();
 
-        img_hitEffect.gameObject.SetActive(true);
+        //img_hitEffect.gameObject.SetActive(true);
 
         if(currentTime > 1.1f)
         {
             myState = EnemyState.AttackDelay;
-            img_hitEffect.gameObject.SetActive(false);
+            //img_hitEffect.gameObject.SetActive(false);
             currentTime = 0;
         }
-        img_hitEffect.gameObject.SetActive(false);
+        
     }
 
     public void AttackDelay()
     {
         enemyAnim.SetTrigger("AttackDelay");
-
+        //img_hitEffect.gameObject.SetActive(false);
         currentTime += Time.deltaTime;
 
         if (currentTime > 2.0f)
